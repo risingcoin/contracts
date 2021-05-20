@@ -203,8 +203,7 @@ contract Adjuster is Ownable {
         pure
         returns (uint256 _days)
     {
-        require(fromTimestamp <= toTimestamp);
-        _days = (toTimestamp - fromTimestamp) / SECONDS_PER_DAY;
+        _days = (fromTimestamp >= toTimestamp) ? 0 : (toTimestamp - fromTimestamp) / SECONDS_PER_DAY;
     }
 
     /**
