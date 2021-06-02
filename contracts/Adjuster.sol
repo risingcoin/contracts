@@ -72,6 +72,10 @@ contract Adjuster is Ownable {
      * msg.sender will receive reward for the transaction
      */
     function adjust(IUniswapV2Pair pair, uint256 minReward) public {
+        // Only externally owned accounts allowed
+        // Smart contracts can't trigger adjuster
+        require(msg.sender == tx.origin, "Adjuster: ONLY_EOA_ALLOWED");
+
         // Check if it's a valid pair
         require(_isAllowedPair[address(pair)], "Adjuster: PAIR_NOT_ALLOWED");
 
