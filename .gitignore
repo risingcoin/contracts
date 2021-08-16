@@ -5,3 +5,5 @@ deployments
 #Hardhat files
 cache
 artifacts
+
+.idea/
