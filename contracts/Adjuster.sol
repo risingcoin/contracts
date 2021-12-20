@@ -17,6 +17,7 @@ contract Adjuster is Ownable {
     uint256 private _productionCost;
     uint256 private _productionCostRate;
     uint256 private _productionCostTimestamp;
+    uint256 private _exchangeFeeNumerator;
     mapping(address => bool) private _isAllowedPair;
 
     /**
@@ -35,13 +36,15 @@ contract Adjuster is Ownable {
         address treasury,
         uint256 productionCost,
         uint256 productionCostRate,
-        uint256 productionCostTimestamp
+        uint256 productionCostTimestamp,
+        uint256 exchangeFeeNumerator
     ) {
         _rc = rc;
         _treasury = treasury;
         _productionCost = productionCost;
         _productionCostRate = productionCostRate;
         _productionCostTimestamp = productionCostTimestamp;
+        _exchangeFeeNumerator = exchangeFeeNumerator;
         transferOwnership(treasury);
     }
 
@@ -262,13 +265,13 @@ contract Adjuster is Ownable {
         uint256 amountIn,
         uint256 reserveIn,
         uint256 reserveOut
-    ) internal pure returns (uint256 amountOut) {
+    ) internal view returns (uint256 amountOut) {
         require(amountIn > 0, "UniswapV2Library: INSUFFICIENT_INPUT_AMOUNT");
         require(
             reserveIn > 0 && reserveOut > 0,
             "UniswapV2Library: INSUFFICIENT_LIQUIDITY"
         );
-        uint256 amountInWithFee = amountIn * 997;
+        uint256 amountInWithFee = amountIn * _exchangeFeeNumerator;
         uint256 numerator = amountInWithFee * reserveOut;
         uint256 denominator = reserveIn * 1000 + amountInWithFee;
         amountOut = numerator / denominator;

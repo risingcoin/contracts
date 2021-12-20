@@ -77,6 +77,10 @@ const config: HardhatUserConfig = {
       url: KOVAN_RPC_URL || `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_KEY}`,
       accounts: { mnemonic: MNEMONIC },
     },
+    bsctestnet: {
+      url: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
+      accounts: { mnemonic: MNEMONIC },
+    },
   },
 };
 export default config;

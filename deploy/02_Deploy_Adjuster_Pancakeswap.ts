@@ -12,7 +12,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const rc = await get("RC");
   await deploy("Adjuster", {
     from: deployer,
-    args: [rc.address, treasury, parseEther("1.0"), parseEther("1.01"), today, 997],
+    args: [rc.address, treasury, parseEther("1.0"), parseEther("1.01"), today, 998],
     log: true,
     deterministicDeployment: true,
   });
